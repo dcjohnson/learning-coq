@@ -25,6 +25,13 @@ Fixpoint add (n m : nat) : nat :=
   | S n' => S (add n' m)
   end.
 
+Fixpoint oadd(n m : nat) : nat :=
+  match n, m with
+  | O, _ => m
+  | _, O => n
+  | _, S m' => oadd (S n) m'
+  end.
+
 Fixpoint sub (n m : nat) : nat :=
   match n, m with
   | O, _ => O
@@ -56,7 +63,7 @@ Fixpoint eq_nat (n m : nat) : bool :=
   | S n', S m' => eq_nat n' m'
   end.
 
-Notation "x + y" := (add x y)
+Notation "x + y" := (oadd x y)
                        (at level 50, left associativity)
                        : nat_scope.
 Notation "x - y" := (sub x y)
@@ -93,9 +100,10 @@ Proof.
 Qed.
 
 Theorem plus_one : forall n : nat,
-  S n = 1 + n.
+  S n = n + 1.
 Proof.
   intros n.
+  Show.
   reflexivity.
 Qed.
 
