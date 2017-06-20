@@ -63,7 +63,7 @@ Fixpoint eq_nat (n m : nat) : bool :=
   | S n', S m' => eq_nat n' m'
   end.
 
-Notation "x + y" := (oadd x y)
+Notation "x + y" := (add x y)
                        (at level 50, left associativity)
                        : nat_scope.
 Notation "x - y" := (sub x y)
@@ -100,7 +100,7 @@ Proof.
 Qed.
 
 Theorem plus_one : forall n : nat,
-  S n = n + 1.
+  S n = 1 + n.
 Proof.
   intros n.
   Show.
@@ -113,5 +113,34 @@ Proof.
   intros n m H.
   rewrite <- plus_one.
   rewrite -> H.
+  reflexivity.
+Qed.
+
+Inductive bin : Type :=
+| O : bin
+| D : bin -> bin
+| DP : bin -> bin.
+
+Definition incr (n : bin) : bin :=
+  match n with
+  | DP d => D d
+  | _ => DP n
+  end.
+
+Fixpoint bin_to_nat (b : bin) : nat :=
+  match b with
+  | O => 0
+  | D b' => S (S (bin_to_nat b'))
+  | DP b' => S (bin_to_nat b')
+  end.
+
+Compute (bin_to_nat ( (incr (incr (O))))).
+
+Example test_bin_incr1 : forall (b : bin),
+    bin_to_nat (incr b) = 1 + (bin_to_nat b).
+Proof.
+  intros b.
+  simpl.
+  Show.
   reflexivity.
 Qed.
