@@ -134,13 +134,20 @@ Fixpoint bin_to_nat (b : bin) : nat :=
   | DP b' => S (bin_to_nat b')
   end.
 
-Compute (bin_to_nat ( (incr (incr (O))))).
-
 Example test_bin_incr1 : forall (b : bin),
-    bin_to_nat (incr b) = 1 + (bin_to_nat b).
+    bin_to_nat (incr O) = 1.
 Proof.
-  intros b.
-  simpl.
-  Show.
+  reflexivity.
+Qed.
+
+Example test_bin_incr2 : forall (b : bin),
+    bin_to_nat (incr (incr (DP O))) = 3.
+Proof.
+  reflexivity.
+Qed.
+
+Example test_bin_incr3 : forall (b : bin),
+    bin_to_nat (incr (D O)) = 3.
+Proof.
   reflexivity.
 Qed.
