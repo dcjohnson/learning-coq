@@ -151,3 +151,64 @@ Example test_bin_incr3 : forall (b : bin),
 Proof.
   reflexivity.
 Qed.
+
+Theorem plus_n_Sm : forall n m : nat,
+    S (n + m) = n + (S m).
+Proof.
+  induction n as [| n' IHn].
+  -
+    reflexivity.
+  -
+    intros m.
+    simpl.
+    rewrite -> IHn.
+    reflexivity.
+Qed.
+
+Theorem zero_comm : forall n : nat,
+    n = n + 0.
+Proof.
+  induction n as [| n' IHn].
+  -
+    reflexivity.
+  -
+    simpl.
+    rewrite <- IHn.
+    reflexivity.
+Qed.
+
+
+Theorem plus_comm : forall n m : nat,
+    n + m = m + n.
+Proof.
+  induction n as [| n' IHn].
+  -
+    induction m as [| m' IHm].
+    --
+      reflexivity.
+    --
+      simpl.
+      rewrite <- IHm.
+      reflexivity.
+  -
+    induction m as [| m' IHm].
+    --
+      simpl.
+      rewrite <- zero_comm.
+      reflexivity.
+    --
+      simpl.
+      rewrite <- IHm.
+      rewrite <- plus_n_Sm.
+      simpl.
+      reflexivity.
+Qed.
+
+
+Example comm_3 : forall n : nat,
+    3 + n = n + 3.
+Proof.
+  intros n.
+  rewrite -> plus_comm.
+  reflexivity.
+  Qed.
