@@ -191,17 +191,11 @@ Proof.
       rewrite <- IHm.
       reflexivity.
   -
-    induction m as [| m' IHm].
-    --
-      simpl.
-      rewrite <- zero_comm.
-      reflexivity.
-    --
-      simpl.
-      rewrite <- IHm.
-      rewrite <- plus_n_Sm.
-      simpl.
-      reflexivity.
+    intros m.
+    simpl.
+    rewrite -> IHn.
+    rewrite -> plus_n_Sm.
+    reflexivity.
 Qed.
 
 
@@ -211,4 +205,4 @@ Proof.
   intros n.
   rewrite -> plus_comm.
   reflexivity.
-  Qed.
+Qed.
